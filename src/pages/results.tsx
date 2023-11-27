@@ -22,12 +22,22 @@ export default function SearchResults() {
 
   useEffect(() => {
     const fetchRestaurants = async () => {
-      const { lat, lng, range } = router.query;
+      const { lat, lng, range, wifi, parking, child, pet, card } = router.query;
       setIsLoading(true);
 
       try {
+        const queryParameters = new URLSearchParams({
+          lat: lat as string,
+          lng: lng as string,
+          range: range as string,
+          wifi: wifi as string,
+          parking: parking as string,
+          child: child as string,
+          pet: pet as string,
+          card: card as string,
+        });
         const response = await fetch(
-          `/api/search?lat=${lat}&lng=${lng}&range=${range}`
+          `/api/search?${queryParameters.toString()}`
         );
         const data = await response.json();
         setRestaurants(data.results.shop);

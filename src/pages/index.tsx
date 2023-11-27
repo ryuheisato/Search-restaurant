@@ -4,11 +4,30 @@ import { useRouter } from 'next/router';
 export default function SearchRestaurant() {
   const [range, setRange] = useState<string>('3');
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [wifi, setWifi] = useState<boolean>(false);
+  const [parking, setParking] = useState<boolean>(false);
+  const [child, setChild] = useState<boolean>(false);
+  const [pet, setPet] = useState<boolean>(false);
+  const [card, setCard] = useState<boolean>(false);
   const router = useRouter();
 
   const handleLocation = () => {
     setIsLoading(true);
-    router.push(`/results?lat=35.658034&lng=139.701636&range=${range}`);
+    //router.push(`/results?lat=35.658034&lng=139.701636&range=${range}`);
+
+    const queryParameters = {
+      lat: '35.658034',
+      lng: '139.701636',
+      range,
+      wifi: wifi ? '1' : '0',
+      parking: parking ? '1' : '0',
+      child: child ? '1' : '0',
+      pet: pet ? '1' : '0',
+      card: card ? '1' : '0',
+    };
+
+    const queryString = new URLSearchParams(queryParameters).toString();
+    router.push(`results?${queryString}`);
 
     // navigator.geolocation.getCurrentPosition(
     //   (position) => {
@@ -38,6 +57,34 @@ export default function SearchRestaurant() {
           <option value='4'>2000m</option>
           <option value='5'>3000m</option>
         </select>
+      </div>
+      <div>
+        <input type='checkbox' checked={wifi} onChange={() => setWifi(!wifi)} />
+        <label>Wi-Fiあり</label>
+      </div>
+      <div>
+        <input
+          type='checkbox'
+          checked={parking}
+          onChange={() => setParking(!parking)}
+        />
+        <label>駐車場あり</label>
+      </div>
+      <div>
+        <input
+          type='checkbox'
+          checked={child}
+          onChange={() => setChild(!child)}
+        />
+        <label>子供OK</label>
+      </div>
+      <div>
+        <input type='checkbox' checked={pet} onChange={() => setPet(!pet)} />
+        <label>ペットOK</label>
+      </div>
+      <div>
+        <input type='checkbox' checked={card} onChange={() => setCard(!card)} />
+        <label>カードOK</label>
       </div>
       <button onClick={handleLocation} disabled={isLoading}>
         {isLoading ? '検索中...' : '現在地から検索'}
