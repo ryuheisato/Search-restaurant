@@ -62,7 +62,9 @@ export default function SearchResults() {
   };
 
   if (isLoading) {
-    return <p>検索中です...</p>;
+    return (
+      <h1 className='flex flex-col text-center text-2xl mt-4'>Loading...</h1>
+    );
   }
 
   return (

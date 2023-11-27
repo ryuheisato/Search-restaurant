@@ -43,13 +43,23 @@ export default function SearchRestaurant() {
   };
 
   return (
-    <div>
-      <div>
-        <label htmlFor='rangeSelect'>検索半径:</label>
+    <div className='flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4'>
+      <div className='w-full max-w-md bg-white rounded-lg shadow-md p-6'>
+        <h2 className='text-lg font-semibold text-center text-gray-800 mb-4'>
+          レストラン検索
+        </h2>
+
+        <label
+          htmlFor='rangeSelect'
+          className='block text-sm font-medium text-gray-700'
+        >
+          検索半径
+        </label>
         <select
           id='rangeSelect'
           value={range}
           onChange={(e) => setRange(e.target.value)}
+          className='mt-1 block w-full p-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
         >
           <option value='1'>300m</option>
           <option value='2'>500m</option>
@@ -57,38 +67,65 @@ export default function SearchRestaurant() {
           <option value='4'>2000m</option>
           <option value='5'>3000m</option>
         </select>
+
+        <div className='flex items-center mt-3'>
+          <input
+            type='checkbox'
+            checked={wifi}
+            onChange={() => setWifi(!wifi)}
+            className='h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded'
+          />
+          <label className='ml-2 block text-sm text-gray-700'>Wi-Fiあり</label>
+        </div>
+
+        <div className='flex items-center mt-3'>
+          <input
+            type='checkbox'
+            checked={parking}
+            onChange={() => setParking(!parking)}
+            className='h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded'
+          />
+          <label className='ml-2 block text-sm text-gray-700'>駐車場あり</label>
+        </div>
+
+        <div className='flex items-center mt-3'>
+          <input
+            type='checkbox'
+            checked={child}
+            onChange={() => setChild(!child)}
+            className='h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded'
+          />
+          <label className='ml-2 block text-sm text-gray-700'>子供OK</label>
+        </div>
+
+        <div className='flex items-center mt-3'>
+          <input
+            type='checkbox'
+            checked={pet}
+            onChange={() => setPet(!pet)}
+            className='h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded'
+          />
+          <label className='ml-2 block text-sm text-gray-700'>ペットOK</label>
+        </div>
+
+        <div className='flex items-center mt-3'>
+          <input
+            type='checkbox'
+            checked={card}
+            onChange={() => setCard(!card)}
+            className='h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded'
+          />
+          <label className='ml-2 block text-sm text-gray-700'>カードOK</label>
+        </div>
+
+        <button
+          onClick={handleLocation}
+          disabled={isLoading}
+          className='mt-4 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+        >
+          現在地から検索
+        </button>
       </div>
-      <div>
-        <input type='checkbox' checked={wifi} onChange={() => setWifi(!wifi)} />
-        <label>Wi-Fiあり</label>
-      </div>
-      <div>
-        <input
-          type='checkbox'
-          checked={parking}
-          onChange={() => setParking(!parking)}
-        />
-        <label>駐車場あり</label>
-      </div>
-      <div>
-        <input
-          type='checkbox'
-          checked={child}
-          onChange={() => setChild(!child)}
-        />
-        <label>子供OK</label>
-      </div>
-      <div>
-        <input type='checkbox' checked={pet} onChange={() => setPet(!pet)} />
-        <label>ペットOK</label>
-      </div>
-      <div>
-        <input type='checkbox' checked={card} onChange={() => setCard(!card)} />
-        <label>カードOK</label>
-      </div>
-      <button onClick={handleLocation} disabled={isLoading}>
-        {isLoading ? '検索中...' : '現在地から検索'}
-      </button>
     </div>
   );
 }

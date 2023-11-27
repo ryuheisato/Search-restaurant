@@ -49,11 +49,17 @@ const RestaurantDetail = () => {
   }, [id]);
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <h1 className='flex flex-col text-center text-2xl mt-4'>Loading...</h1>
+    );
   }
 
   if (!restaurant) {
-    return <p>レストランの情報が見つかりません。</p>;
+    return (
+      <h1 className='flex flex-col text-center text-2xl mt-4'>
+        レストランの情報が見つかりません。
+      </h1>
+    );
   }
 
   console.log(restaurant);
