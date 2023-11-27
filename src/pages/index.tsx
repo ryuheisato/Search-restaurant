@@ -16,8 +16,8 @@ export default function SearchRestaurant() {
     //router.push(`/results?lat=35.658034&lng=139.701636&range=${range}`);
 
     const queryParameters = {
-      lat: '35.658034',
-      lng: '139.701636',
+      //lat: '35.658034',
+      //lng: '139.701636',
       range,
       wifi: wifi ? '1' : '0',
       parking: parking ? '1' : '0',
@@ -27,19 +27,21 @@ export default function SearchRestaurant() {
     };
 
     const queryString = new URLSearchParams(queryParameters).toString();
-    router.push(`results?${queryString}`);
+    //router.push(`results?${queryString}`);
 
-    // navigator.geolocation.getCurrentPosition(
-    //   (position) => {
-    //     const { latitude, longitude } = position.coords;
-    //     console.log(`緯度: ${latitude}, 経度: ${longitude}`);
-    //     router.push(`/results?lat=${latitude}&lng=${longitude}&range=${range}`);
-    //   },
-    //   (error) => {
-    //     setIsLoading(false);
-    //     console.error('位置情報の取得に失敗しました。', error);
-    //   }
-    // );
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        console.log(`緯度: ${latitude}, 経度: ${longitude}`);
+        router.push(
+          `/results?lat=${latitude}&lng=${longitude}&${queryString}}`
+        );
+      },
+      (error) => {
+        setIsLoading(false);
+        console.error('位置情報の取得に失敗しました。', error);
+      }
+    );
   };
 
   return (
@@ -123,7 +125,7 @@ export default function SearchRestaurant() {
           disabled={isLoading}
           className='mt-4 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
         >
-          現在地から検索
+          {isLoading ? '検索中...' : '現在地から検索'}
         </button>
       </div>
     </div>
